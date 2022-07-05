@@ -5,7 +5,8 @@ import { altogic } from "../helpers/altogic";
 import { useAuth } from "../context/Auth";
 
 export function Signup() {
-  const { user } = useAuth()
+  const { user, setUser } = useAuth();
+  const { session, setSession } = useAuth();
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -22,18 +23,19 @@ export function Signup() {
     const password = passwordRef.current.value;
     const name = nameRef.current.value;
 
-    const { errors } = await altogic.auth.signUpWithEmail(
+    const { user, session, errors } = await altogic.auth.signUpWithEmail(
       email,
       password,
       name
     );
 
     if (errors) return setError(errors);
-
-    history.push("/");
+    setUser(user);
+    setSession(session);
+    history.push("/auth-redirect");
   }
 
-  if(user) {
+  if (user && session) {
     history.push("/");
   }
 
@@ -41,19 +43,26 @@ export function Signup() {
     <>
       <form onSubmit={handleSubmit}>
         <div>{errors && JSON.stringify(errors)}</div>
-
-        <label htmlFor="input-name">Name</label>
-        <input id="input-name" type="text" ref={nameRef} />
-
-        <label htmlFor="input-email">Email</label>
-        <input id="input-email" type="email" ref={emailRef} />
-        <label htmlFor="input-password">Password</label>
-
-        <input id="input-password" type="password" ref={passwordRef} />
-
         <br />
+        <div style={{ margin: "20px 0" }}>
+          <label htmlFor="input-name">Name</label>
+          <br />
+          <input id="input-name" type="text" ref={nameRef} />
+          <br />
 
-        <button type="submit">Sign up</button>
+          <label htmlFor="input-email">Email</label>
+          <br />
+          <input id="input-email" type="email" ref={emailRef} />
+          <br />
+          <label htmlFor="input-password">Password</label>
+          <br />
+
+          <input id="input-password" type="password" ref={passwordRef} />
+          <br />
+          <br />
+
+          <button type="submit">Sign up</button>
+        </div>
       </form>
 
       <br />

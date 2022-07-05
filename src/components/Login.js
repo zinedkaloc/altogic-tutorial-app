@@ -5,7 +5,8 @@ import { useAuth } from "../context/Auth";
 import { altogic } from "../helpers/altogic";
 
 export function Login() {
-  const {setUser} = useAuth()
+  const { user, setUser } = useAuth();
+  const { session, setSession } = useAuth();
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -20,10 +21,18 @@ export function Login() {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    const { session, errors } = await altogic.auth.signInWithEmail(email, password);
+    const { user, session, errors } = await altogic.auth.signInWithEmail(
+      email,
+      password
+    );
     if (errors) return setError(errors);
-    setUser(session)
+    setUser(user);
+    setSession(session);
 
+    history.push("/");
+  }
+
+  if (user && session) {
     history.push("/");
   }
 
