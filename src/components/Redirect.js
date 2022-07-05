@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { altogic } from "../helpers/altogic";
 /* import { useHistory } from "react-router-dom"; */
 import { useAuth } from "../context/Auth";
+import useQuery from "../helpers/useQuery"
 
-const Redirect = async () => {
+function Redirect() {
   /* const history = useHistory(); */
-  const { user, setUser } = useAuth();
-  const { setSession } = useAuth();
+  const { user, setUser, setSession } = useAuth();
+  const query = useQuery();
+
   useEffect(() => {
     altogic.auth.getAuthGrant().then(({ session, user, errors }) => {
       setUser(user);
@@ -17,9 +19,7 @@ const Redirect = async () => {
   }, []);
 
   /*  else history.replace("/"); */
-  return (
-    <div>Hello{/* {user && <pre>{JSON.stringify(user, null, 2)}</pre>} */}</div>
-  );
+  return <div>Hello! {user?._id}</div>;
 };
 
 export default Redirect;
