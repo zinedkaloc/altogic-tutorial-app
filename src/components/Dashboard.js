@@ -19,7 +19,7 @@ export function Dashboard() {
 
   return (
     <div className={styles.container}>
-      <h1>Welcome, {user?.userId} </h1>
+      <h1>Welcome, {user?.name} </h1>
       <p>Your user informations are like following;</p>
       {user && <pre>{JSON.stringify(user, null, 2)}</pre>}
       <p>Your session informations are like following;</p>

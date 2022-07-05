@@ -14,6 +14,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const session = altogic.auth.getSession();
+    console.log(session);
     const user = altogic.auth.getUser();
     setUser(user ?? null);
     setSession(session ?? null);

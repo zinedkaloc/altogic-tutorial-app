@@ -32,7 +32,6 @@ export function Signup() {
     if (errors) return setError(errors);
     setUser(user);
     setSession(session);
-    history.push("/auth-redirect");
   }
 
   if (user && session) {
