@@ -13,17 +13,12 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const session = altogic.auth.getSession();
-    debugger;
     setUser(session ?? null);
     setLoading(false);
   }, []);
 
-  const value = {
-    user,
-  };
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{user, setUser}}>
       {!loading && children}
     </AuthContext.Provider>
   );

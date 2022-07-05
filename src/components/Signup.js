@@ -2,8 +2,11 @@ import { useRef, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 
 import { altogic } from "../helpers/altogic";
+import { useAuth } from "../context/Auth";
 
 export function Signup() {
+  const { user } = useAuth()
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const nameRef = useRef();
@@ -27,6 +30,10 @@ export function Signup() {
 
     if (errors) return setError(errors);
 
+    history.push("/");
+  }
+
+  if(user) {
     history.push("/");
   }
 

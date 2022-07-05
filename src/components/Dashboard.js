@@ -3,18 +3,19 @@ import { useAuth } from "../context/Auth";
 import { altogic } from "../helpers/altogic";
 
 export function Dashboard() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const history = useHistory();
 
   async function handleSignOut() {
     await altogic.auth.signOut();
 
+    setUser(null)
     history.push("/login");
   }
 
   return (
     <div>
-      <p>Welcome, {user.userId} </p>
+      <p>Welcome, {user?.userId} </p>
       <button onClick={handleSignOut}>Sign out</button>
     </div>
   );

@@ -1,9 +1,12 @@
 import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../context/Auth";
 
 import { altogic } from "../helpers/altogic";
 
 export function Login() {
+  const {setUser} = useAuth()
+
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -17,8 +20,9 @@ export function Login() {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    const { errors } = await altogic.auth.signInWithEmail(email, password);
+    const { session, errors } = await altogic.auth.signInWithEmail(email, password);
     if (errors) return setError(errors);
+    setUser(session)
 
     history.push("/");
   }
